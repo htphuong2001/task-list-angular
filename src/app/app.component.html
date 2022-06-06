@@ -22,6 +22,21 @@
     </div>
   </div>
   <div class="row justify-content-md-center">
+    <div class="col col-lg-4">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control shadow-none"
+          placeholder="Search..."
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          [(ngModel)]="search"
+          (ngModelChange)="changeSearch()"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
     <div class="col col-lg-5">
       <table class="table table-borderless">
         <tbody *ngFor="let task of filterTasks">
@@ -34,7 +49,7 @@
                   value=""
                   id="{{ task.id }}"
                   [(ngModel)]="task.isCompleted"
-                  (change)="changStatusTask()"
+                  (change)="changeStatusTask()"
                 />
                 <label class="form-check-label" for="{{ task.id }}">
                   {{ task.content }}

@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   tasks: Task[] = [];
   filterTasks: Task[] = [];
   newTask: string = '';
+  search: string = '';
   filter: Filter = Filter.All;
 
   ngOnInit(): void {
@@ -29,15 +30,23 @@ export class AppComponent implements OnInit {
   }
 
   updateFilter() {
+    let tasksSearch =
+      this.search.length != 0
+        ? this.tasks.filter((task) =>
+            task.content
+              .toLocaleLowerCase()
+              .includes(this.search.toLocaleLowerCase())
+          )
+        : this.tasks;
     switch (this.filter) {
       case Filter.All:
-        this.filterTasks = this.tasks;
+        this.filterTasks = tasksSearch;
         break;
       case Filter.Active:
-        this.filterTasks = this.tasks.filter((task) => !task.isCompleted);
+        this.filterTasks = tasksSearch.filter((task) => !task.isCompleted);
         break;
       case Filter.Completed:
-        this.filterTasks = this.tasks.filter((task) => task.isCompleted);
+        this.filterTasks = tasksSearch.filter((task) => task.isCompleted);
         break;
       default:
         break;
@@ -65,8 +74,11 @@ export class AppComponent implements OnInit {
     this.updateFilter();
   }
 
-  changStatusTask() {
-    console.log('hi');
+  changeStatusTask() {
+    this.updateFilter();
+  }
+
+  changeSearch() {
     this.updateFilter();
   }
 }
